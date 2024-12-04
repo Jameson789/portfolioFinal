@@ -3,29 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Job Experience</title>
+    <title>Add Job Experience</title>
 </head>
 <body>
     <h1>Add Job Experience</h1>
     <form method="POST" action="/submitJob">
-        <br>
         <p>Enter Company:</p>
         <input class="input-field" type="text" name="company" value="<%= data.company %>">
-        <br>
-        <p>Enter time worked (Ex: 2020-2023, 2020-present):</p>
-        <input class="input-field" type="text" name="timeWorked" value="<%= data.timeWorked %>">
-        <br>
-        <p>Enter Positon:</p>
+
+        <p>Enter Start Date (YYYY-MM-DD):</p>
+        <input class="input-field" type="date" name="startDate" value="<%= data.startDate %>">
+
+        <p>Enter End Date (YYYY-MM-DD or leave blank for present):</p>
+        <input class="input-field" type="date" name="endDate" value="<%= data.endDate %>">
+
+        <p>Enter Position:</p>
         <input class="input-field" type="text" name="position" value="<%= data.position %>">
-        <br>
-        <p>Important skills/experience developed:</p>
+
+        <p>Important Skills/Experience Developed:</p>
         <textarea class="input-field" name="skills"><%= data.skills %></textarea>
-        <br>
+
         <button class="submit-button" type="submit">Submit</button>
+
         <% if (errors) { %>
             <% errors.forEach((error) => { %>
                 <p class="errors"><%= error %></p>
-        <% }); %>
+            <% }); %>
         <% } %>
     </form>
 </body>

@@ -1,113 +1,107 @@
 const express = require('express');
-const mariadb = require('mariadb')
 
 const app = express();
 const PORT = 3000;
 
-const pool = mariadb.createPool({
-    host: 'localhost',
-    user: 'root',
-    database: 'portfolio',
-    password: '1234'
-});
-
-async function connect() {
-    try {
-        const conn = await pool.getConnection();
-        console.log("Connected to mariaDB");
-        return conn;
-    } catch (err) {
-        console.log('Error connecting to MariaDB: ' + err);
-    }
-};
-connect(); //for testing
-
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static('views'));
-
 
 app.set('view engine', 'ejs');
 
 app.get('/', (req, res) => {
     res.render('home');
-}); 
+});
 
 app.get('/project', (req, res) => {
-    res.render('addproject', {data: [], errors: []});
+    res.render('addproject', { data: [], errors: [] });
 });
 
 app.get('/addjob', (req, res) => {
-    res.render('addjob', {data: [], errors: []});
-}); 
+    res.render('addjob', { data: [], errors: [] });
+});
+
 app.post('/submitProject', (req, res) => {
     let newproject = {
-        project: req.body.project, 
-        timeWorked: req.body.timeWorked,
+        project: req.body.project,
+        startDate: req.body.startDate,
+        endDate: req.body.endDate,
         skills: req.body.skills,
-        desc: req.body.desc
+        desc: req.body.desc,
     };
-    console.log(newproject);
+
     let isValid = true;
     let errors = [];
 
-    if (newproject.project.trim() === ''){
+    if (newproject.project.trim() === '') {
         isValid = false;
         errors.push("Add project title");
-    } 
-    if (newproject.timeWorked.trim() === ''){
+    }
+    if (newproject.startDate.trim() === '') {
         isValid = false;
-        errors.push("Add Time Worked");
-    } 
-    if (newproject.skills.trim() === ''){
+        errors.push("Add a start date");
+    }
+    if (newproject.endDate.trim() === '') {
+        isValid = false;
+        errors.push("Add an end date");
+    }
+    if (newproject.skills.trim() === '') {
         isValid = false;
         errors.push("Add skills");
-    } 
-    if (newproject.desc.trim() === ''){
+    }
+    if (newproject.desc.trim() === '') {
         isValid = false;
         errors.push("Add project description");
-    } 
-    if(!isValid) {
-        res.render('addproject', {data: newproject, errors: errors});
-        return;
-    } 
-    res.render('confirmation');
-}); 
+    }
+
+    if (!isValid) {
+        res.render('addproject', { data: newproject, errors: errors });
+    } else {
+        console.log("Received project data:", newproject); // Simulating data handling
+        res.render('confirmation');
+    }
+});
 
 app.post('/submitJob', (req, res) => {
     let newjob = {
         company: req.body.company,
-        timeWorked: req.body.timeWorked,
+        startDate: req.body.startDate,
+        endDate: req.body.endDate,
         position: req.body.position,
-        skills: req.body.skills
-    }; 
+        skills: req.body.skills,
+    };
+
     let isValid = true;
     let errors = [];
 
-    if (newjob.company.trim() === ''){
+    if (newjob.company.trim() === '') {
         isValid = false;
         errors.push("Add a company");
-    } 
-    if (newjob.timeWorked.trim() === ''){
-        isValid = false;
-        errors.push("Add time worked");
     }
-    if (newjob.position.trim() === ''){
+    if (newjob.startDate.trim() === '') {
+        isValid = false;
+        errors.push("Add a start date");
+    }
+    if (newjob.endDate.trim() === '') {
+        isValid = false;
+        errors.push("Add an end date");
+    }
+    if (newjob.position.trim() === '') {
         isValid = false;
         errors.push("Add a position");
     }
-    if (newjob.skills.trim() === ''){
+    if (newjob.skills.trim() === '') {
         isValid = false;
         errors.push("Add skills");
     }
 
-    if(!isValid) {
-        res.render('addjob', {data: newjob, errors: errors});
-        return;
-    } 
-    console.log(newjob.company);
-    res.render('confirmation');
-})
+    if (!isValid) {
+        res.render('addjob', { data: newjob, errors: errors });
+    } else {
+        console.log("Received job data:", newjob); // Simulating data handling
+        res.render('confirmation');
+    }
+});
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port http://localhost:${PORT}`);
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
