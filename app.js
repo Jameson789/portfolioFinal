@@ -1,4 +1,5 @@
 const express = require('express');
+const mariadb = require('mariadb');
 
 const app = express();
 const PORT = 3000;
@@ -7,6 +8,24 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static('views'));
 
 app.set('view engine', 'ejs');
+
+const pool = mariadb.createPool({
+    host: 'localhost',
+    user: 'root',
+    database: 'portfolio',
+    password: '1234'
+});
+
+async function connect() {
+    try {
+        const conn = await pool.getConnection();
+        console.log("Connected to mariaDB");
+        return conn;
+    } catch (err) {
+        console.log('Error connecting to MariaDB: ' + err);
+    }
+}; 
+connect();
 
 app.get('/', (req, res) => {
     res.render('home');
@@ -20,7 +39,7 @@ app.get('/addjob', (req, res) => {
     res.render('addjob', { data: [], errors: [] });
 });
 
-app.post('/submitProject', (req, res) => {
+app.post('/submitProject', async (req, res) => {
     let newproject = {
         project: req.body.project,
         startDate: req.body.startDate,
@@ -55,13 +74,16 @@ app.post('/submitProject', (req, res) => {
 
     if (!isValid) {
         res.render('addproject', { data: newproject, errors: errors });
-    } else {
-        console.log("Received project data:", newproject); // Simulating data handling
-        res.render('confirmation');
+        return;
     }
+    const conn = await connect();
+    conn.query(`INSERT INTO project (project, startDate, endDate, skills, description) 
+        VALUES ('${newproject.project}', '${newproject.startDate}', '${newproject.endDate}', '${newproject.skills}', '${newproject.desc}' );`);
+    res.render('confirmation');
+
 });
 
-app.post('/submitJob', (req, res) => {
+app.post('/submitJob', async (req, res) => {
     let newjob = {
         company: req.body.company,
         startDate: req.body.startDate,
@@ -72,6 +94,7 @@ app.post('/submitJob', (req, res) => {
 
     let isValid = true;
     let errors = [];
+    const conn = await connect();
 
     if (newjob.company.trim() === '') {
         isValid = false;
@@ -96,10 +119,12 @@ app.post('/submitJob', (req, res) => {
 
     if (!isValid) {
         res.render('addjob', { data: newjob, errors: errors });
-    } else {
-        console.log("Received job data:", newjob); // Simulating data handling
-        res.render('confirmation');
-    }
+        return;
+    } 
+
+    conn.query(`INSERT INTO job (company, startDate, endDate, position, skills) 
+        VALUES ('${newjob.company}', '${newjob.startDate}', '${newjob.endDate}', '${newjob.position}', '${newjob.skills}' );`);
+    res.render('confirmation');
 });
 
 app.listen(PORT, () => {
