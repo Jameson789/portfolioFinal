@@ -4,32 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirmation</title>
+    <script src="public/scripts/addSkills.js" defer></script>
 </head>
 <body>
     <h1>Add Project Experience</h1>
-<form method="POST" action="/submitProject">
-    <p>Enter Project Name:</p>
-    <input class="input-field" type="text" name="project" value="<%= data.project %>">
-    
-    <p>Start Date:</p>
-    <input class="input-field" type="date" name="startDate" value="<%= data.startDate %>">
+    <form method="POST" action="/submitProject">
+        <p>Enter Project Name:</p>
+        <input class="input-field" type="text" name="project" value="<%= data.project %>">
+        
+        <p>Start Date:</p>
+        <input class="input-field" type="date" name="startDate" value="<%= data.startDate %>">
 
-    <p>End Date:</p>
-    <input class="input-field" type="date" name="endDate" value="<%= data.endDate %>">
+        <p>End Date:</p>
+        <input class="input-field" type="date" name="endDate" value="<%= data.endDate %>">
 
-    <p>Enter Skills Acquired:</p>
-    <input class="input-field" type="text" name="skills" value="<%= data.skills %>">
+        <p>Enter Skills Acquired:</p>
+        <div id="skill-container">
+            <input class="input-field" type="text" name="skills" value="<%= data.skills %>">
+        </div>
+        <button type="button" id="add-skill-button">Add Another Skill</button>
 
-    <p>Project Description:</p>
-    <textarea class="input-field" name="desc"><%= data.desc %></textarea>
+        <p>Project Description:</p>
+        <textarea class="input-field" name="desc"><%= data.desc %></textarea>
 
-    <button class="submit-button" type="submit">Submit</button>
-    <% if (errors) { %>
-        <% errors.forEach((error) => { %>
-            <p class="errors"><%= error %></p>
-        <% }); %>
-    <% } %>
-</form>
-
+        <button class="submit-button" type="submit">Submit</button>
+        <% if (errors) { %>
+            <% errors.forEach((error) => { %>
+                <p class="errors"><%= error %></p>
+            <% }); %>
+        <% } %>
+    </form>
 </body>
 </html>

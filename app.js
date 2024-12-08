@@ -63,7 +63,7 @@ app.post('/submitProject', async (req, res) => {
         isValid = false;
         errors.push("Add an end date");
     }
-    if (newproject.skills.trim() === '') {
+    if (newproject.skills === '') {
         isValid = false;
         errors.push("Add skills");
     }
@@ -78,7 +78,7 @@ app.post('/submitProject', async (req, res) => {
     }
     const conn = await connect();
     conn.query(`INSERT INTO project (project, startDate, endDate, skills, description) 
-        VALUES ('${newproject.project}', '${newproject.startDate}', '${newproject.endDate}', '${newproject.skills}', '${newproject.desc}' );`);
+        VALUES ('${newproject.project}', '${newproject.startDate}', '${newproject.endDate}', '${newproject.skills}', '${newproject.descc}' );`);
     res.render('confirmation');
 
 });
