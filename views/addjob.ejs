@@ -4,32 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Job Experience</title>
+    <link rel="stylesheet" href="/public/styles/home.css"> 
 </head>
 <body>
-    <h1>Add Job Experience</h1>
-    <form method="POST" action="/submitJob">
-        <p>Enter Company:</p>
-        <input class="input-field" type="text" name="company" value="<%= data.company %>">
+    <div class="container">
+        <h1 class="page-title">Add Job Experience</h1>
+        <form method="POST" action="/submitJob">
+            <div class="post-entry">
+                <label for="company" class="post-title">Enter Company:</label>
+                <input class="input-field" type="text" id="company" name="company" value="<%= data.company %>">
+            </div>
 
-        <p>Enter Start Date</p>
-        <input class="input-field" type="date" name="startDate" value="<%= data.startDate %>">
+            <div class="post-entry">
+                <label for="startDate" class="post-title">Enter Start Date:</label>
+                <input class="input-field" type="date" id="startDate" name="startDate" value="<%= data.startDate %>">
+            </div>
 
-        <p>Enter End Date</p>
-        <input class="input-field" type="date" name="endDate" value="<%= data.endDate %>">
+            <div class="post-entry">
+                <label for="endDate" class="post-title">Enter End Date:</label>
+                <input class="input-field" type="date" id="endDate" name="endDate" value="<%= data.endDate %>">
+            </div>
 
-        <p>Enter Position:</p>
-        <input class="input-field" type="text" name="position" value="<%= data.position %>">
+            <div class="post-entry">
+                <label for="position" class="post-title">Enter Position:</label>
+                <input class="input-field" type="text" id="position" name="position" value="<%= data.position %>">
+            </div>
 
-        <p>Experience Developed:</p>
-        <textarea class="input-field" name="skills"><%= data.skills %></textarea>
+            <div class="post-entry">
+                <label for="skills" class="post-title">Experience Developed:</label>
+                <textarea class="input-field" id="skills" name="skills"><%= data.skills %></textarea>
+            </div>
 
-        <button class="submit-button" type="submit">Submit</button>
+            <button class="submit-button skill-button" type="submit">Submit</button>
 
-        <% if (errors) { %>
-            <% errors.forEach((error) => { %>
-                <p class="errors"><%= error %></p>
-            <% }); %>
-        <% } %>
-    </form>
+            <% if (errors) { %>
+                <div class="errors">
+                    <% errors.forEach((error) => { %>
+                        <p><%= error %></p>
+                    <% }); %>
+                </div>
+            <% } %>
+        </form>
+        <a class="link-button" href="/">Home Page</a>
+    </div>
 </body>
 </html>

@@ -3,36 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confirmation</title>
+    <title>Add Project Experience</title>
+    <link rel="stylesheet" href="/public/styles/home.css">
     <script src="public/scripts/addSkills.js" defer></script>
 </head>
 <body>
-    <h1>Add Project Experience</h1>
-    <form method="POST" action="/submitProject">
-        <p>Enter Project Name:</p>
-        <input class="input-field" type="text" name="project" value="<%= data.project %>">
-        
-        <p>Start Date:</p>
-        <input class="input-field" type="date" name="startDate" value="<%= data.startDate %>">
+    <div class="container">
+        <h1 class="page-title">Add Project Experience</h1>
+        <form method="POST" action="/submitProject">
+            <div class="post-entry">
+                <label for="project" class="post-title">Enter Project Name:</label>
+                <input id="project" class="input-field" type="text" name="project" value="<%= data.project %>">
+            </div>
 
-        <p>End Date:</p>
-        <input class="input-field" type="date" name="endDate" value="<%= data.endDate %>">
+            <div class="post-entry">
+                <label for="startDate" class="post-title">Start Date:</label>
+                <input id="startDate" class="input-field" type="date" name="startDate" value="<%= data.startDate %>">
+            </div>
 
-        <p>Enter Skills Acquired:</p>
-        <div id="skill-container">
-            <input class="input-field" type="text" name="skills" value="<%= data.skills %>">
-        </div>
-        <button type="button" id="add-skill-button">Add Another Skill</button>
+            <div class="post-entry">
+                <label for="endDate" class="post-title">End Date:</label>
+                <input id="endDate" class="input-field" type="date" name="endDate" value="<%= data.endDate %>">
+            </div>
 
-        <p>Project Description:</p>
-        <textarea class="input-field" name="desc"><%= data.desc %></textarea>
+            <div class="post-entry">
+                <label for="skills" class="post-title">Enter Skills Acquired:</label>
+                <div id="skill-container">
+                    <input id="skills" class="input-field" type="text" name="skills" value="<%= data.skills %>">
+                </div>
+                <button type="button" id="add-skill-button" class="link-button skill-button">Add Another Skill</button>
+            </div>
 
-        <button class="submit-button" type="submit">Submit</button>
-        <% if (errors) { %>
-            <% errors.forEach((error) => { %>
-                <p class="errors"><%= error %></p>
-            <% }); %>
-        <% } %>
-    </form>
+            <div class="post-entry">
+                <label for="desc" class="post-title">Project Description:</label>
+                <textarea id="desc" class="input-field" name="desc"><%= data.desc %></textarea>
+            </div>
+
+            <button class="submit-button skill-button" type="submit">Submit</button>
+
+            <% if (errors) { %>
+                <div class="errors">
+                    <% errors.forEach((error) => { %>
+                        <p class="error"><%= error %></p>
+                    <% }); %>
+                </div>
+            <% } %>
+        </form>
+        <a class="link-button" href="/">Home Page</a>
+    </div>
 </body>
 </html>
