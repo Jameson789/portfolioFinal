@@ -25,10 +25,15 @@ async function connect() {
         console.log('Error connecting to MariaDB: ' + err);
     }
 }; 
-connect();
+//connect();
 
-app.get('/', (req, res) => {
-    res.render('home');
+app.get('/', async (req, res) => {
+    const conn = await connect();
+    let project = await conn.query(`SELECT * FROM project`);
+    let job = await conn.query(`SELECT * FROM job`);
+    res.render('home', { project: project, job: job });
+    console.log(project);
+    console.log(job);
 });
 
 app.get('/project', (req, res) => {

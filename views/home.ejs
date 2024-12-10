@@ -4,11 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <link rel="stylesheet" href="/public/styles/home.css">
 </head>
 <body>
-    <h1>Portfolio page</h1> 
-    <p>This is Jameson Farmer's personal portfilio showcasing job and project experience!</p>
-    <a href="/addjob">Add Job Experience</a>
-    <a href="/project">Add Project Experience</a>
+    <div class="container">
+        <h1 class="page-title">Portfolio Page</h1>
+        <p>This is Jameson Farmer's personal portfolio showcasing job and project experience!</p>
+
+        <div class="section">
+            <h2>Professional Experience</h2>
+            <% job.forEach(job => { %>
+                <div class="post-entry">
+                    <h3 class="post-title"><%= job.position %> - <%= job.company %></h3>
+                    <p class="post-detail"><strong>Dates:</strong> <%= job.startDate %> to <%= job.endDate %></p>
+                    <p class="post-detail"><strong>Skills:</strong></p>
+                    <div class="skills">
+                        <% job.skills.split(',').forEach(skill => { %>
+                            <span class="skill-badge"><%= skill.trim() %></span>
+                        <% }) %>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+
+        <hr>
+
+        <div class="section">
+            <h2>Project Experience</h2>
+            <% project.forEach(project => { %>
+                <div class="post-entry">
+                    <h3 class="post-title"><%= project.project %></h3>
+                    <p class="post-detail"><strong>Dates:</strong> <%= project.startDate %> to <%= project.endDate %></p>
+                    <p class="post-detail"><strong>Description:</strong> <%= project.description %></p>
+                    <p class="post-detail"><strong>Skills:</strong></p>
+                    <ul class="skills">
+                        <% project.skills.split(',').forEach(skill => { %>
+                            <li class="skill-badge"><%= skill.trim() %></li>
+                        <% }) %>
+                    </ul>
+                </div>
+            <% }) %>
+        </div>
+        <nav>
+            <a class="link-button" href="/addjob">Add Job Experience</a> |
+            <a class="link-button" href="/project">Add Project Experience</a>
+        </nav>
+    </div>
 </body>
 </html>
