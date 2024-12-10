@@ -20,6 +20,7 @@
                 <div class="post-entry">
                     <h3 class="post-title"><%= job.position %> - <%= job.company %></h3>
                     <p class="post-detail"><strong>Dates:</strong> <%= job.startDate %> to <%= job.endDate %></p>
+                    <p class="post-detail"><strong>Description:</strong> <%= job.desc %></p>
                     <p class="post-detail"><strong>Skills:</strong></p>
                     <div class="skills">
                         <% job.skills.split(',').forEach(skill => { %>

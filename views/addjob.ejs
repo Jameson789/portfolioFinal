@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Job Experience</title>
     <link rel="stylesheet" href="/public/styles/home.css"> 
+    <script src="public/scripts/addSkills.js" defer></script>
 </head>
 <body>
     <div class="container">
@@ -31,8 +32,16 @@
             </div>
 
             <div class="post-entry">
-                <label for="skills" class="post-title">Experience Developed:</label>
-                <textarea class="input-field" id="skills" name="skills"><%= data.skills %></textarea>
+                <label for="desc" class="post-title">Description:</label>
+                <input class="input-field" type="text" id="desc" name="desc" value="<%= data.desc %>">
+            </div>            
+
+            <div class="post-entry">
+                <label for="skills" class="post-title">Enter Skills Acquired:</label>
+                <div id="skill-container">
+                    <input id="skills" class="input-field" type="text" name="skills" value="<%= data.skills %>">
+                </div>
+                <button type="button" id="add-skill-button" class="link-button skill-button">Add Another Skill</button>
             </div>
 
             <button class="submit-button skill-button" type="submit">Submit</button>

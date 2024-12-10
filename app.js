@@ -94,6 +94,7 @@ app.post('/submitJob', async (req, res) => {
         startDate: req.body.startDate,
         endDate: req.body.endDate,
         position: req.body.position,
+        desc: req.body.desc,
         skills: req.body.skills,
     };
 
@@ -116,6 +117,10 @@ app.post('/submitJob', async (req, res) => {
     if (newjob.position.trim() === '') {
         isValid = false;
         errors.push("Add a position");
+    }
+    if (newjob.desc.trim() === '') {
+        isValid = false;
+        errors.push("Add a description");
     }
     if (newjob.skills.trim() === '') {
         isValid = false;
